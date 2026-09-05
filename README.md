@@ -1,48 +1,267 @@
-# 🚀 TalentForge - Full-Stack Job Portal & AI-Driven ATS Platform
+# 🚀 TalentForge — Full-Stack Job Portal & ATS Platform
 
-A production-ready, multi-tenant Job Board and Applicant Tracking System (ATS) engineered with a robust backend architecture, strict type security, role-based entry gates, and an algorithmic keyword-tokenizer compliance engine.
+TalentForge is a production-ready **Job Portal and Applicant Tracking System (ATS)** built to streamline recruitment workflows for candidates, recruiters, and administrators.
 
-## 🔗 Live Production Gateways
+The platform includes role-based authentication, job management, resume processing, algorithmic resume-to-job matching, recruitment workflows, and a scalable full-stack architecture.
 
-- **🌐 Live User Interface (Vercel):** [https://vercel.app](https://vercel.app)
-- **📡 Live Core REST API Server (Render):** [https://onrender.com](https://onrender.com)
+## 🔗 Live Demo
 
----
-
-## 🌟 Key Architectural Features
-
-- **Algorithmic Compliance Screening:** Features an in-memory string-tokenized extraction parsing sequence that evaluates uploaded candidate documents (`.txt`, `.pdf`) and outputs a contextual percentage matching score against role requirements instantly.
-- **Strict Multi-Role Security:** Engineered custom Express middleware routing interceptors utilizing JWT state transmission payloads to segment candidate boards, recruiter dashboards, and admin viewports under strict RBAC restrictions.
-- **Relational Data Mapping Layer:** Implemented an optimized PostgreSQL layer via Prisma ORM utilizing transactional batch aggregations and unique constraint protection patterns.
-- **High-Performance Microservices:** Fully dockerized ecosystem leveraging multi-stage Alpine images and an Nginx reverse routing proxy node configuration block.
+* 🌐 **Frontend:** https://vercel.app
+* 📡 **Backend API:** https://onrender.com
+* 💻 **GitHub:** https://github.com/Mobin977/job-portal-ats
 
 ---
 
-## 🛠️ Technology Integration Blueprint
+## ✨ Key Features
 
-### 📡 Backend Core Service Node
+### 👤 Candidate
 
-- **Framework:** Node.js, Express.js (Native ES Module Layout Syntax)
-- **Database Architecture:** PostgreSQL & Prisma ORM Data Mapping
-- **Security Engine:** JSON Web Tokens (JWT) & 12-Round Salt Bcrypt Hashing
-- **File Management:** Multer Buffer Multipart Form Stream Ingestion
+* User registration and login
+* Browse available jobs
+* Search and apply for jobs
+* Upload resumes
+* Track application status
+* Resume-to-job matching score
 
-### 🎨 Frontend Client Interface
+### 🏢 Recruiter
 
-- **Framework:** React 18, Vite Engine, TypeScript Compiler Layout
-- **Style Directives:** Tailwind CSS, PostCSS Bridge Pipeline
-- **Network Interface:** Axios Automated Authorization Bearer Header Interceptors
-- **Icons Library:** Lucide React Vectors Asset Sheets
+* Create and manage job postings
+* Review candidate applications
+* View candidate profiles and resumes
+* Manage recruitment workflows
+* Track hiring activity
+
+### 🛡️ Administrator
+
+* Role-based access control
+* Manage users and organizations
+* Monitor platform activity
+* Access recruitment analytics
+
+### 📄 Resume & ATS Processing
+
+* Supports `.txt` and `.pdf` resumes
+* Resume text extraction
+* Keyword/token-based matching
+* Job requirement comparison
+* Matching percentage generation
+
+> The ATS matching engine uses an algorithmic keyword/token matching approach rather than an external LLM.
 
 ---
 
-## 🐳 Containerized Execution Guide (Local Setup)
+## 🏗️ Architecture
 
-To execute this complete enterprise stack locally with zero configuration barriers, verify your local Docker desktop application daemon layer is active, clone this workspace repository, and execute the orchestration command line at the repository root:
+```text
+┌──────────────────────────────┐
+│      React + TypeScript      │
+│          Vite Frontend       │
+└──────────────┬───────────────┘
+               │
+               │ REST API
+               ▼
+┌──────────────────────────────┐
+│       Node.js + Express      │
+│        Backend API           │
+│                              │
+│ JWT Authentication           │
+│ RBAC Middleware              │
+│ Resume Processing            │
+│ ATS Matching Engine          │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│       Prisma ORM             │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│        PostgreSQL            │
+└──────────────────────────────┘
 
-```bash
-docker-compose up --build
+Resume Upload
+      │
+      ▼
+Text Extraction
+      │
+      ▼
+Keyword Matching
+      │
+      ▼
+ATS Match Score
 ```
 
-- **Frontend User Gateway Dashboard:** `http://localhost:5173`
-- **Backend Core REST API Server Routing Path:** `http://localhost:5000`
+---
+
+## 🛠️ Technology Stack
+
+### Frontend
+
+* React 18
+* TypeScript
+* Vite
+* Tailwind CSS
+* Axios
+* Lucide React
+
+### Backend
+
+* Node.js
+* Express.js
+* TypeScript
+* JWT
+* Bcrypt
+* Multer
+
+### Database
+
+* PostgreSQL
+* Prisma ORM
+
+### Infrastructure
+
+* Docker
+* Docker Compose
+* Nginx
+* Vercel
+* Render
+
+---
+
+## 🔐 Security
+
+The application implements:
+
+* JWT-based authentication
+* Role-based authorization
+* Protected API routes
+* Password hashing with Bcrypt
+* Request validation
+* Database constraints
+* Environment-based secret management
+
+Sensitive credentials and environment variables are **not stored in the repository**.
+
+---
+
+## 🐳 Run Locally
+
+### Prerequisites
+
+Make sure you have installed:
+
+* Node.js
+* Docker Desktop
+* Git
+
+### Clone Repository
+
+```bash
+git clone https://github.com/Mobin977/job-portal-ats.git
+
+cd job-portal-ats
+```
+
+### Start With Docker
+
+```bash
+docker compose up --build
+```
+
+### Local Services
+
+Frontend:
+
+```text
+http://localhost:5173
+```
+
+Backend:
+
+```text
+http://localhost:5000
+```
+
+---
+
+## ⚙️ Environment Variables
+
+Create your environment files using the provided example configuration.
+
+Example:
+
+```env
+DATABASE_URL=
+JWT_SECRET=
+PORT=
+```
+
+Never commit real credentials, API keys, database passwords, or secrets to GitHub.
+
+---
+
+## 📸 Screenshots
+
+### Candidate Dashboard
+
+*Add screenshot here*
+
+### Job Listings
+
+*Add screenshot here*
+
+### Resume Upload / ATS Matching
+
+*Add screenshot here*
+
+### Recruiter Dashboard
+
+*Add screenshot here*
+
+### Admin Dashboard
+
+*Add screenshot here*
+
+---
+
+## 📊 Engineering Highlights
+
+This project demonstrates practical experience with:
+
+* Full-stack application architecture
+* REST API development
+* Role-based access control
+* Relational database modeling
+* Prisma ORM
+* Secure authentication
+* Resume file processing
+* Algorithmic ATS matching
+* Multi-tenant application design
+* Dockerized development
+* Nginx reverse proxy configuration
+* Cloud deployment
+
+---
+
+## 🚀 Future Improvements
+
+* AI/LLM-powered resume analysis
+* Semantic resume-to-job matching
+* Email notifications
+* Advanced recruiter analytics
+* Elasticsearch-powered job search
+* Automated testing and CI/CD
+* AWS-based infrastructure
+
+---
+
+## 👨‍💻 Author
+
+**Mobin977**
+
+Full-Stack Developer focused on building production-ready applications with **React, TypeScript, Node.js, PostgreSQL, and modern cloud technologies.**
+
+---
+
+⭐ If you find this project useful, consider giving the repository a star!
