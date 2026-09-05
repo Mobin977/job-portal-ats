@@ -4,10 +4,10 @@ TalentForge is a production-ready **Job Portal and Applicant Tracking System (AT
 
 The platform includes role-based authentication, job management, resume processing, algorithmic resume-to-job matching, recruitment workflows, and a scalable full-stack architecture.
 
-## 🔗 Live Demo
+## 🔗 Live Production Deployment
 
-* 🌐 **Frontend:** https://vercel.app
-* 📡 **Backend API:** https://onrender.com
+* 🌐 **Frontend:** https://job-portal-ats.vercel.app/
+* 📡 **Backend API:** https://job-portal-ats-kk9p.onrender.com
 * 💻 **GitHub:** https://github.com/Mobin977/job-portal-ats
 
 ---
@@ -18,78 +18,103 @@ The platform includes role-based authentication, job management, resume processi
 
 * User registration and login
 * Browse available jobs
-* Search and apply for jobs
+* Search and filter jobs
+* Apply for jobs
 * Upload resumes
 * Track application status
 * Resume-to-job matching score
+* Candidate profile management
 
 ### 🏢 Recruiter
 
-* Create and manage job postings
+* Create job postings
+* Update job postings
+* Manage job listings
 * Review candidate applications
-* View candidate profiles and resumes
+* View candidate profiles
+* View uploaded resumes
 * Manage recruitment workflows
 * Track hiring activity
 
 ### 🛡️ Administrator
 
 * Role-based access control
-* Manage users and organizations
+* Manage users
+* Manage organizations
 * Monitor platform activity
 * Access recruitment analytics
-
-### 📄 Resume & ATS Processing
-
-* Supports `.txt` and `.pdf` resumes
-* Resume text extraction
-* Keyword/token-based matching
-* Job requirement comparison
-* Matching percentage generation
-
-> The ATS matching engine uses an algorithmic keyword/token matching approach rather than an external LLM.
+* Manage platform resources
 
 ---
 
-## 🏗️ Architecture
+## 📄 Resume & ATS Processing
+
+TalentForge provides algorithmic resume processing and matching functionality.
+
+Supported resume formats include:
+
+* `.txt`
+* `.pdf`
+
+### Matching Pipeline
 
 ```text
-┌──────────────────────────────┐
-│      React + TypeScript      │
-│          Vite Frontend       │
-└──────────────┬───────────────┘
-               │
-               │ REST API
-               ▼
-┌──────────────────────────────┐
-│       Node.js + Express      │
-│        Backend API           │
-│                              │
-│ JWT Authentication           │
-│ RBAC Middleware              │
-│ Resume Processing            │
-│ ATS Matching Engine          │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│       Prisma ORM             │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│        PostgreSQL            │
-└──────────────────────────────┘
-
 Resume Upload
+      │
+      ▼
+File Processing
       │
       ▼
 Text Extraction
       │
       ▼
+Tokenization
+      │
+      ▼
+Job Requirement Comparison
+      │
+      ▼
 Keyword Matching
       │
       ▼
-ATS Match Score
+ATS Matching Score
+```
+
+The current ATS matching engine uses an **algorithmic keyword/token matching approach** rather than an external LLM.
+
+---
+
+## 🏗️ System Architecture
+
+```text
+                     ┌──────────────────────────┐
+                     │   React 18 + TypeScript  │
+                     │       Vite Frontend      │
+                     └────────────┬─────────────┘
+                                  │
+                               REST API
+                                  │
+                                  ▼
+                     ┌──────────────────────────┐
+                     │     Node.js + Express    │
+                     │        TypeScript        │
+                     │                          │
+                     │ JWT Authentication       │
+                     │ RBAC Middleware          │
+                     │ Job Management            │
+                     │ Resume Processing         │
+                     │ ATS Matching Engine       │
+                     └────────────┬─────────────┘
+                                  │
+                                  ▼
+                     ┌──────────────────────────┐
+                     │       Prisma ORM         │
+                     └────────────┬─────────────┘
+                                  │
+                                  ▼
+                     ┌──────────────────────────┐
+                     │       PostgreSQL         │
+                     └──────────────────────────┘
 ```
 
 ---
@@ -129,19 +154,134 @@ ATS Match Score
 
 ---
 
-## 🔐 Security
+## 🔐 Authentication & Authorization
 
-The application implements:
+TalentForge uses JWT-based authentication and role-based authorization.
 
-* JWT-based authentication
-* Role-based authorization
+Supported application roles include:
+
+* Candidate
+* Recruiter
+* Administrator
+
+Protected resources are accessible only after successful authentication and authorization.
+
+Security mechanisms include:
+
+* JWT authentication
+* RBAC middleware
 * Protected API routes
 * Password hashing with Bcrypt
 * Request validation
 * Database constraints
-* Environment-based secret management
+* Environment-based secrets
 
-Sensitive credentials and environment variables are **not stored in the repository**.
+---
+
+## 🏢 Multi-Tenant Architecture
+
+The platform is designed to support organization-level separation.
+
+Recruitment data can be associated with specific organizations while role-based permissions control access to protected resources.
+
+This architecture provides a foundation for SaaS-style recruitment platforms.
+
+---
+
+## 📊 Recruitment Analytics
+
+The platform supports recruitment-related analytics such as:
+
+* Job activity
+* Application activity
+* Candidate status
+* Recruitment workflow metrics
+* Organization-level activity
+
+Analytics data is handled through the PostgreSQL/Prisma data layer.
+
+---
+
+## 📂 Project Structure
+
+```text
+job-portal-ats/
+│
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── routes/
+│   │   └── server.ts
+│   │
+│   └── package.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── App.tsx
+│   │
+│   └── package.json
+│
+├── docker-compose.yml
+└── README.md
+```
+
+---
+
+## 🗄️ Database Architecture
+
+PostgreSQL is used as the primary relational database.
+
+Prisma ORM provides:
+
+* Type-safe database queries
+* Relational data modeling
+* Schema management
+* Database migrations
+* Transactions
+* Database constraints
+
+The database manages entities such as:
+
+* Users
+* Organizations
+* Jobs
+* Applications
+* Resumes
+* Candidate profiles
+* Recruitment workflows
+
+---
+
+## 📤 Resume Upload Architecture
+
+Resume files are processed through a multipart upload pipeline.
+
+```text
+Candidate
+    │
+    ▼
+Resume Upload
+    │
+    ▼
+Multer Multipart Processing
+    │
+    ▼
+File Type Validation
+    │
+    ▼
+Text Extraction
+    │
+    ▼
+ATS Matching Engine
+    │
+    ▼
+Matching Percentage
+```
 
 ---
 
@@ -149,11 +289,11 @@ Sensitive credentials and environment variables are **not stored in the reposito
 
 ### Prerequisites
 
-Make sure you have installed:
+Install:
 
 * Node.js
-* Docker Desktop
 * Git
+* Docker Desktop
 
 ### Clone Repository
 
@@ -187,41 +327,96 @@ http://localhost:5000
 
 ## ⚙️ Environment Variables
 
-Create your environment files using the provided example configuration.
-
-Example:
+Backend example:
 
 ```env
 DATABASE_URL=
 JWT_SECRET=
-PORT=
+PORT=5000
 ```
 
-Never commit real credentials, API keys, database passwords, or secrets to GitHub.
+Frontend example:
+
+```env
+VITE_API_URL=
+```
+
+Never commit:
+
+```text
+.env
+.env.local
+database passwords
+JWT secrets
+API keys
+production credentials
+```
+
+Use `.env.example` files to document required configuration.
+
+---
+
+## 🌐 Production Configuration
+
+### Frontend
+
+```text
+https://job-portal-ats.vercel.app/
+```
+
+### Backend
+
+```text
+https://job-portal-ats-kk9p.onrender.com
+```
+
+Frontend API configuration:
+
+```env
+VITE_API_URL=https://job-portal-ats-kk9p.onrender.com
+```
 
 ---
 
 ## 📸 Screenshots
 
+Add real screenshots from the deployed application.
+
 ### Candidate Dashboard
 
-*Add screenshot here*
+```text
+Add screenshot here
+```
 
 ### Job Listings
 
-*Add screenshot here*
+```text
+Add screenshot here
+```
 
-### Resume Upload / ATS Matching
+### Resume Upload
 
-*Add screenshot here*
+```text
+Add screenshot here
+```
+
+### ATS Matching
+
+```text
+Add screenshot here
+```
 
 ### Recruiter Dashboard
 
-*Add screenshot here*
+```text
+Add screenshot here
+```
 
 ### Admin Dashboard
 
-*Add screenshot here*
+```text
+Add screenshot here
+```
 
 ---
 
@@ -230,17 +425,52 @@ Never commit real credentials, API keys, database passwords, or secrets to GitHu
 This project demonstrates practical experience with:
 
 * Full-stack application architecture
+* React
+* TypeScript
+* Node.js
+* Express.js
 * REST API development
-* Role-based access control
-* Relational database modeling
+* PostgreSQL
 * Prisma ORM
-* Secure authentication
-* Resume file processing
+* JWT authentication
+* RBAC
+* Bcrypt password hashing
+* Multer file processing
+* Resume text extraction
 * Algorithmic ATS matching
 * Multi-tenant application design
-* Dockerized development
-* Nginx reverse proxy configuration
-* Cloud deployment
+* Docker
+* Nginx
+* Vercel
+* Render
+
+---
+
+## 🎯 What This Project Demonstrates
+
+**Full-Stack Development**
+
+Complete frontend, backend, database, authentication, file processing, and deployment workflow.
+
+**ATS Engineering**
+
+Resume processing and algorithmic job-to-resume matching.
+
+**Role-Based Architecture**
+
+Separate workflows and permissions for candidates, recruiters, and administrators.
+
+**Database Engineering**
+
+Relational PostgreSQL data modeling using Prisma ORM.
+
+**Security**
+
+JWT authentication, password hashing, protected routes, and role-based authorization.
+
+**DevOps**
+
+Dockerized development with cloud deployment through Vercel and Render.
 
 ---
 
@@ -248,11 +478,17 @@ This project demonstrates practical experience with:
 
 * AI/LLM-powered resume analysis
 * Semantic resume-to-job matching
+* Resume ranking
+* Automated interview scheduling
 * Email notifications
 * Advanced recruiter analytics
 * Elasticsearch-powered job search
-* Automated testing and CI/CD
-* AWS-based infrastructure
+* Automated testing
+* GitHub Actions CI/CD
+* AWS infrastructure
+* Resume recommendation engine
+* AI-generated candidate summaries
+* AI-generated job descriptions
 
 ---
 
@@ -260,7 +496,17 @@ This project demonstrates practical experience with:
 
 **Mobin977**
 
-Full-Stack Developer focused on building production-ready applications with **React, TypeScript, Node.js, PostgreSQL, and modern cloud technologies.**
+Full-Stack Developer focused on building production-ready applications with:
+
+**React • TypeScript • Node.js • Express • PostgreSQL • Prisma • Docker • Cloud Technologies**
+
+---
+
+## 🔗 Project Links
+
+* 🌐 **Live Application:** https://job-portal-ats.vercel.app/
+* 📡 **Backend API:** https://job-portal-ats-kk9p.onrender.com
+* 💻 **GitHub:** https://github.com/Mobin977/job-portal-ats
 
 ---
 
